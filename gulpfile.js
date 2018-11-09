@@ -90,27 +90,11 @@ gulp.task("bundle", function() {
   minifyJS();
 });
 
-gulp.task("watch", function(cb) {
-  watch("components/*", buildHTML);
-  watch("**/*.scss", processSass);
-  watch("js/**/*.js", minifyJS);
-});
-
 gulp.task("lint", function() {
   return gulp
     .src(["!js/vendor/**/*.js", "js/**/*.js"])
     .pipe(jshint(".jshintrc"))
     .pipe(jshint.reporter("jshint-stylish"));
-});
-
-gulp.task("watch-test", function(done) {
-  return new Server(
-    {
-      configFile: __dirname + "/karma.conf.js",
-      singleRun: false
-    },
-    done
-  ).start();
 });
 
 gulp.task("test-once", function(done) {
@@ -142,7 +126,6 @@ gulp.task("copy", function() {
   buildHTML();
 });
 
-gulp.task("default", ["bundle", "copy", "express", "watch"]);
-gulp.task("test", ["lint", "watch-test"]);
+gulp.task("default", ["bundle", "copy", "express"]);
 gulp.task("testci", ["lint", "test-once"]);
 gulp.task("build", ["clean-dist", "bundle", "copy"]);
