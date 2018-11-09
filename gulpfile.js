@@ -18,9 +18,9 @@ gulp.task("express", function() {
   var app = express();
   app.use(connectlivereload({ port: 35729 }));
   app.use(express.static("./dist"));
-  var port = 4000;
-  app.listen(port, "0.0.0.0", function() {
-    console.log("App running and listening on port", port);
+  var port = process.env.PORT;
+  app.listen(port, function() {
+    console.log("App running on port", port);
   });
 });
 
