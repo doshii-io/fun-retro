@@ -1,10 +1,10 @@
 var config = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DATABASE_URL,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGE_SENDER_ID
+  apiKey: "AIzaSyBJDO52skbw0TVoq8e0DRKe_LvYnWNwjac",
+  authDomain: "funretro-f5847.firebaseapp.com",
+  databaseURL: "https://funretro-f5847.firebaseio.com",
+  projectId: "funretro-f5847",
+  storageBucket: "funretro-f5847.appspot.com",
+  messagingSenderId: "doshii"
 };
 
 firebase.initializeApp(config);
