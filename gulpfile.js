@@ -8,7 +8,6 @@ var gulp = require("gulp"),
   concatCss = require("gulp-concat-css"),
   uglifycss = require("gulp-uglifycss"),
   sass = require("gulp-sass"),
-  connectlivereload = require("connect-livereload"),
   express = require("express"),
   path = require("path"),
   watch = require("gulp-watch"),
@@ -16,23 +15,11 @@ var gulp = require("gulp"),
 
 gulp.task("express", function() {
   var app = express();
-  app.use(connectlivereload({ port: 35729 }));
   app.use(express.static("./dist"));
-  var port = process.env.PORT;
+  var port = process.env.PORT || 4000;
   app.listen(port, function() {
     console.log("App running on port", port);
   });
-});
-
-var tinylr;
-
-function notifyLiveReload(event) {
-  tinylr.changed({ body: { files: [path.relative(__dirname, event.path)] } });
-}
-
-gulp.task("livereload", function() {
-  tinylr = require("tiny-lr")();
-  tinylr.listen(35729);
 });
 
 var buildHTML = function() {
@@ -104,11 +91,8 @@ gulp.task("bundle", function() {
 });
 
 gulp.task("watch", function(cb) {
-  watch("dist/*", notifyLiveReload);
-  watch("**/*.html", notifyLiveReload);
   watch("components/*", buildHTML);
   watch("**/*.scss", processSass);
-  watch("**/*.scss", notifyLiveReload);
   watch("js/**/*.js", minifyJS);
 });
 
@@ -158,7 +142,7 @@ gulp.task("copy", function() {
   buildHTML();
 });
 
-gulp.task("default", ["bundle", "copy", "express", "livereload", "watch"]);
+gulp.task("default", ["bundle", "copy", "express", "watch"]);
 gulp.task("test", ["lint", "watch-test"]);
 gulp.task("testci", ["lint", "test-once"]);
 gulp.task("build", ["clean-dist", "bundle", "copy"]);
